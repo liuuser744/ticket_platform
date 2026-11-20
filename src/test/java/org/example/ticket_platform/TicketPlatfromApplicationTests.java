@@ -1,4 +1,4 @@
-package org.example.ticket_platfrom;
+package org.example.ticket_platform;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

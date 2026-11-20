@@ -6,7 +6,7 @@
     <artifactId>ticket_platfrom</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ticket_platfrom</name>
-    <description>ticket_platfrom</description>
+    <description>ticket_platform</description>
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,6 +56,11 @@
             <artifactId>lettuce-core</artifactId>
             <version>6.3.2.RELEASE</version>
         </dependency>
+        <!-- spring.redis.lettuce.pool 配置需要 commons-pool2，否则连接时 NoClassDefFoundError -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -86,8 +91,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>org.example.ticket_platfrom.TicketPlatfromApplication</mainClass>
-                    <skip>true</skip>
+                    <mainClass>org.example.ticket_platform.TicketPlatfromApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
