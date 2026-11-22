@@ -1,5 +1,6 @@
 package org.example.ticket_platform.entity;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.ToString;
 

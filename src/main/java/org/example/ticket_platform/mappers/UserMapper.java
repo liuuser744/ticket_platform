@@ -1,0 +1,7 @@
+package org.example.ticket_platform.mappers;
+
+import org.example.ticket_platform.entity.User;
+
+public interface UserMapper {
+    User getUserByusername(String username);
+}
