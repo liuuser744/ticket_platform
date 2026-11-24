@@ -2,6 +2,8 @@ package org.example.ticket_platform.config;
 
 
 import org.example.ticket_platform.security.filter.JwtAuthenticationFilter;
+import org.example.ticket_platform.security.handler.JwtAccessDeniedHandler;
+import org.example.ticket_platform.security.handler.JwtAuthEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +24,12 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtauthenticationFilter;
 
+    @Autowired
+    private JwtAccessDeniedHandler  jwtAccessDeniedHandler;
+
+    @Autowired
+    private JwtAuthEntryPoint  jwtAuthEntryPoint;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -38,6 +46,11 @@ public class SecurityConfig {
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                                 .anyRequest().authenticated()
+                )
+                /*相关异常直接调用handler创建返回体*/
+                .exceptionHandling( Exception -> Exception
+                        .authenticationEntryPoint(jwtAuthEntryPoint)
+                        .accessDeniedHandler(jwtAccessDeniedHandler)
                 )
                 .addFilterBefore(jwtauthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
