@@ -10,4 +10,7 @@
     <select id="getUserByuserid" resultType="user">
         select * from sys_user where id=#{id} and deleted=0 and status=1
     </select>
+    <update id="updatepassword">
+        update sys_user set password=#{password} where username=#{username} and deleted=0 and status=1
+    </update>
 </mapper>

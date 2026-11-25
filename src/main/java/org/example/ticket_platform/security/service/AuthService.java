@@ -1,10 +1,7 @@
 package org.example.ticket_platform.security.service;
 
-import org.example.ticket_platform.common.exception.BusinessException;
-import org.example.ticket_platform.common.result.Result;
 import org.example.ticket_platform.common.result.TokenResult;
 import org.example.ticket_platform.security.exception.AuthException;
-import org.example.ticket_platform.security.principal.LoginUser;
 import org.example.ticket_platform.security.util.JwtUtil;
 import org.example.ticket_platform.dto.request.LoginRequestDto;
 import org.example.ticket_platform.entity.User;
@@ -25,7 +22,7 @@ public class AuthService {
     private UserMapper userMapper;
 
     @Autowired
-    private StringRedisTemplate StringRedisTemplate;
+    private  StringRedisTemplate StringRedisTemplate;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -39,7 +36,7 @@ public class AuthService {
     /*拼接用户名*/
     private static final String FAIL_KEY = "login:fail:";
     /*单会话token*/
-    private static final String ACCTOKEN_KEY = "login:accesstoken";
+    private static final String ACCTOKEN_KEY = "login:accesstoken:";
     /*5次锁定*/
     private static final int MAX_FAil = 5;
     /*锁15分钟*/
@@ -100,5 +97,35 @@ public class AuthService {
             throw AuthException.serviceUnavailable("服务当前不可用，请稍后再试");
         }
         return new TokenResult(accToken);
+    }
+
+    /*退出登录*/
+    public void logout(Long userid){
+        try {
+            StringRedisTemplate.delete(ACCTOKEN_KEY+userid);
+        }catch (Exception e){
+            throw AuthException.serviceUnavailable("服务当前不可用");
+        }
+    }
+
+    /*修改密码*/
+    public void password(String username,String oldpassword,String newpassword){
+        if(username==null || oldpassword==null || newpassword==null){
+            throw AuthException.unauthorized("输入值不能为空");
+        }
+        User userByusername = userMapper.getUserByusername(username);
+        if( userByusername==null || !passwordEncoder.matches(oldpassword,userByusername.getPassword())){
+            throw AuthException.unauthorized("旧密码错误，请重新输入");
+        }
+        try {
+            userMapper.updatepassword(username,passwordEncoder.encode(newpassword));
+        }catch (Exception e){
+            throw AuthException.unauthorized("修改密码失败");
+        }
+        try {
+            StringRedisTemplate.delete(ACCTOKEN_KEY+userByusername.getId());
+        }catch (Exception e){
+            throw AuthException.serviceUnavailable("当前服务不可用");
+        }
     }
 }

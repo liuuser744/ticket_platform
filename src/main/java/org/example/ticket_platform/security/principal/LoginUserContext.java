@@ -1,7 +1,7 @@
 package org.example.ticket_platform.security.principal;
 
 import org.example.ticket_platform.security.exception.AuthException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -10,13 +10,11 @@ import org.springframework.stereotype.Component;
 
 
 /**
- *  这个类主要负责从SecurityContextHandler中取出数据
+ *  这个类主要负责从SecurityContextHandler中取出LoginUser
  */
 
 @Component
 public class LoginUserContext {
-
-    private AuthException authException;
 
     public static LoginUser getloginUser(){
         SecurityContext context = SecurityContextHolder.getContext();
@@ -31,4 +29,5 @@ public class LoginUserContext {
         }
         return loginUser;
     }
+
 }
