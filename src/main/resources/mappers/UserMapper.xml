@@ -7,4 +7,7 @@
     <select id="getUserByusername" resultType="user">
         select * from sys_user where username=#{username} and deleted=0 and status=1
     </select>
+    <select id="getUserByuserid" resultType="user">
+        select * from sys_user where id=#{id} and deleted=0 and status=1
+    </select>
 </mapper>

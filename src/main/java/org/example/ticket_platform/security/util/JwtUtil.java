@@ -1,4 +1,4 @@
-package org.example.ticket_platform.common.util;
+package org.example.ticket_platform.security.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

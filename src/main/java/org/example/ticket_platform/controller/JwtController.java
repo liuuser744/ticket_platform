@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import org.example.ticket_platform.common.result.Result;
 import org.example.ticket_platform.common.result.TokenResult;
 import org.example.ticket_platform.dto.request.LoginRequestDto;
-import org.example.ticket_platform.service.AuthService;
+import org.example.ticket_platform.security.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

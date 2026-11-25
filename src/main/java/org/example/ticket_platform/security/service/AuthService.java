@@ -1,8 +1,8 @@
-package org.example.ticket_platform.service;
+package org.example.ticket_platform.security.service;
 
 import org.example.ticket_platform.common.exception.BusinessException;
 import org.example.ticket_platform.common.result.TokenResult;
-import org.example.ticket_platform.common.util.JwtUtil;
+import org.example.ticket_platform.security.util.JwtUtil;
 import org.example.ticket_platform.dto.request.LoginRequestDto;
 import org.example.ticket_platform.entity.User;
 import org.example.ticket_platform.mappers.UserMapper;
