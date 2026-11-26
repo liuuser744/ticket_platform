@@ -42,7 +42,7 @@ public class SecurityConfig {
                 //放行登录
                 .authorizeHttpRequests(
                         auth ->auth
-                                .requestMatchers("/auth/login").permitAll()
+                                .requestMatchers("/api/auth/login").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                                 .anyRequest().authenticated()

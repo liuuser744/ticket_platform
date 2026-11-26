@@ -20,7 +20,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -47,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         /*检查白名单则直接跳过*/
         String path = request.getRequestURI();
-        if ("/auth/login".equals(path) || "/error".equals(path) || "OPTIONS".equals(request.getMethod())) {
+        if ("/api/auth/login".equals(path) || "/error".equals(path) || "OPTIONS".equals(request.getMethod())) {
             filterChain.doFilter(request, response);
             return;
         }

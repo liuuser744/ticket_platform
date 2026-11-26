@@ -4,7 +4,9 @@ package org.example.ticket_platform.common.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.example.ticket_platform.common.result.Result;
+import org.example.ticket_platform.security.exception.AuthException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -26,9 +28,17 @@ public class GlobalExceptionHandler {
         return Result.fail(400,msg);
     }
 
+    @ExceptionHandler(AuthException.class)
+    public ResponseEntity<Result<Void>> hanlerAuthException(AuthException e){
+        return ResponseEntity
+                .status(e.getCode())
+                .body(Result.fail(e.getCode(),e.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     public Result<Void> handlerException(Exception e){
         log.error("系统异常",e);
         return Result.fail(500,"系统繁忙，请稍后再试");
     }
+
 }
